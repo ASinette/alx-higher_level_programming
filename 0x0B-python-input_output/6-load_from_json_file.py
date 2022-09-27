@@ -1,14 +1,19 @@
 #!/usr/bin/python3
 '''A module containing IO functions.
 '''
-from json import JSONEncoder
+from json import JSONDecoder
 
 
-def save_to_json_file(my_obj, filename):
-    '''Saves the JSON representation of an object to a file.
+def load_from_json_file(filename):
+    '''Creates an object from its JSON representation stored in a file.
     Args:
-        my_obj (any): An object to convert to JSON.
-        filename (str): The file to save the JSON string in.
+        filename (str): The name of the file containing the JSON string.
+    Returns:
+        any: An object corresponding to the JSON string in the file,
+        otherwise an exception is thrown.
     '''
-    with open(filename, mode='w', encoding='utf-8') as file:
-        file.write(JSONEncoder().encode(my_obj))
+    lines = []
+    with open(filename, encoding='utf-8') as file:
+        for line in file.readlines():
+            lines.append(line)
+    return JSONDecoder().decode(''.join(lines))
